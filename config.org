@@ -61,11 +61,23 @@ https://github.com/org-noter/org-noter
          :host github
          :type git
          :files ("*.el" "modules/*.el"))
-  :after (org djvu nov pdf-tools)
+  :after (org nov pdf-tools)
   :bind (("<f5> n" . org-noter))
   :custom
   (org-noter-auto-save-last-location t)
   (org-noter-notes-search-path '(my-notes-directory)))
+#+end_src
+
+* nov
+
+https://depp.brause.cc/nov.el/
+
+Useful to open =epub= files and for org-noter to annotate files in =epub= format. In fact, =doc-view=, which is already included, can open files in =djvu= and =epub=. But, it converts every page of an =epub= file to an image, while =nov= can be used to access the text. We have to tell Emacs to open =epubs= in this mode, otherwise it will use =doc-view=.
+
+#+begin_src emacs-lisp
+(use-package nov
+  :straight t
+  :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
 * pdf-tools
