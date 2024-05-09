@@ -1,0 +1,67 @@
+* personal settings
+
+#+begin_src emacs-lisp
+;; -*- lexical-binding: t; -*-
+
+(setq my-notes-directory "~/Dropbox/org/reading-notes"
+      my-bibliography "~/Dropbox/texmf/bibtex/bib/misc/rvf.bib"
+      my-library-path "~/Documents/References/")
+#+end_src
+
+* use-package
+
+#+begin_src emacs-lisp
+(straight-use-package 'use-package)
+#+end_src
+
+* magit
+
+https://magit.vc
+
+#+begin_quote
+Magit is a complete text-based user interface to Git.
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package magit
+  :straight t
+  :bind ("C-c m" . magit-status))
+#+end_src
+
+* org-noter
+
+This defines =C-M-.= as =org-noter-sync-current-note=.
+
+https://github.com/org-noter/org-noter
+
+#+begin_src emacs-lisp
+(use-package org-noter
+  :straight
+  (:repo "org-noter/org-noter"
+         :host github
+         :type git
+         :files ("*.el" "modules/*.el"))
+  :after (org djvu nov pdf-tools)
+  :custom
+  (org-noter-auto-save-last-location t)
+  (org-noter-notes-search-path '(my-notes-directory)))
+#+end_src
+
+* pdf-tools
+
+https://github.com/vedang/pdf-tools
+
+#+begin_quote
+PDF Tools is, among other things, a replacement of DocView for PDF files. The key difference is that pages are not pre-rendered by e.g. ghostscript and stored in the file-system, but rather created on-demand and stored in memory.
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :if window-system
+  :straight t
+  :config
+  (pdf-tools-install))
+#+end_src
+
+
+
