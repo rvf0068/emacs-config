@@ -8,6 +8,16 @@
       my-library-path "~/Documents/References/")
 #+end_src
 
+* emacs general settings
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (ido-mode 1)
+  :init
+  (global-visual-line-mode))
+#+end_src
+
 * use-package
 
 #+begin_src emacs-lisp
@@ -28,9 +38,19 @@ Magit is a complete text-based user interface to Git.
   :bind ("C-c m" . magit-status))
 #+end_src
 
+* org
+
+- I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
+
+#+begin_src emacs-lisp
+(use-package org
+  :custom
+  (org-src-preserve-indentation t))
+#+end_src
+
 * org-noter
 
-This defines =C-M-.= as =org-noter-sync-current-note=.
+By default =C-M-.= is bound to =org-noter-sync-current-note=.
 
 https://github.com/org-noter/org-noter
 
@@ -42,6 +62,7 @@ https://github.com/org-noter/org-noter
          :type git
          :files ("*.el" "modules/*.el"))
   :after (org djvu nov pdf-tools)
+  :bind (("<f5> n" . org-noter))
   :custom
   (org-noter-auto-save-last-location t)
   (org-noter-notes-search-path '(my-notes-directory)))
