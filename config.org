@@ -24,7 +24,46 @@
 (straight-use-package 'use-package)
 #+end_src
 
-* magit
+* Packages
+
+** corfu
+
+https://github.com/minad/corfu
+
+#+begin_quote
+corfu.el - COmpletion in Region FUnction
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package corfu
+  :straight t
+  :custom
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
+#+end_src
+
+*** cape
+
+By default, =corfu= works only on =.el= files. For it to be able to complete, say, by the words in a dictionary or words in the buffer, it needs /extensions/ given by =cape=.
+
+https://github.com/minad/cape
+
+#+begin_quote
+cape.el - Completion At Point Extensions
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package cape
+  :straight t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-dict))
+#+end_src
+
+Note that in order to use a non-English dictionary, it is useful a local variable like =cape-dict-file: "/usr/share/dict/spanish"=.
+
+** magit
 
 https://magit.vc
 
@@ -38,7 +77,7 @@ Magit is a complete text-based user interface to Git.
   :bind ("C-c m" . magit-status))
 #+end_src
 
-* org
+** org
 
 - I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
 
@@ -48,7 +87,7 @@ Magit is a complete text-based user interface to Git.
   (org-src-preserve-indentation t))
 #+end_src
 
-* org-noter
+** org-noter
 
 By default =C-M-.= is bound to =org-noter-sync-current-note=.
 
@@ -68,7 +107,7 @@ https://github.com/org-noter/org-noter
   (org-noter-notes-search-path '(my-notes-directory)))
 #+end_src
 
-* nov
+** nov
 
 https://depp.brause.cc/nov.el/
 
@@ -80,7 +119,7 @@ Useful to open =epub= files and for org-noter to annotate files in =epub= format
   :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
-* pdf-tools
+** pdf-tools
 
 https://github.com/vedang/pdf-tools
 
