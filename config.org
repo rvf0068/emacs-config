@@ -82,6 +82,21 @@ Magit is a complete text-based user interface to Git.
   :bind ("C-c m" . magit-status))
 #+end_src
 
+** mixed-pitch
+
+https://gitlab.com/jabranham/mixed-pitch
+
+#+begin_src quote
+Mix fixed-pitch and variable-pitch fonts in Emacs
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package mixed-pitch
+  :straight t
+  :hook
+  (text-mode . mixed-pitch-mode))
+#+end_src
+
 ** org
 
 - I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
