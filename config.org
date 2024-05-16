@@ -110,7 +110,7 @@ https://gitlab.com/protesilaos/modus-themes
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs nil
         modus-themes-region '(bg-only no-extend))
-  (load-theme 'modus-operandi))
+  (load-theme 'modus-operandi :no-confirm))
 #+end_src
 
 ** org
