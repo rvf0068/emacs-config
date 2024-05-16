@@ -68,6 +68,46 @@ cape.el - Completion At Point Extensions
 
 Note that in order to use a non-English dictionary, it is useful a local variable like =cape-dict-file: "/usr/share/dict/spanish"=.
 
+** jupyter
+
+#+begin_quote
+An interface to communicate with Jupyter kernels.
+#+end_quote
+
+https://github.com/nnicandro/emacs-jupyter
+
+The recent versions do not work with my ubuntu. The issue is described [[https://github.com/nnicandro/emacs-zmq/issues/48][here]]. So far the workaround is to manually compile =emacs-zmq.so= in =straight/build= and copy it to the other folder there. Also, manually return =jupyter=  repo to commit =487a755= in the corresponding folder. This gives some warnings =Unknown type: json-plist=, but otherwise seems to work. With these libraries it seems to work (it seems that the most important version not to upgrade is =jupyter_core=).
+
+#+begin_src shell
+(pycliques-dev) rafael@dell2:~$ jupyter --version
+Selected Jupyter core packages...
+IPython          : 8.17.2
+ipykernel        : 6.26.0
+ipywidgets       : 8.1.1
+jupyter_client   : 8.6.1
+jupyter_core     : 5.7.2
+jupyter_server   : 1.23.4
+jupyterlab       : 4.0.8
+nbclient         : 0.10.0
+nbconvert        : 7.16.4
+nbformat         : 5.10.4
+notebook         : 7.0.6
+qtconsole        : 5.5.1
+traitlets        : 5.14.3
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package jupyter
+  :if (executable-find "jupyter")
+  :straight t
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((latex . t)
+     (python . t)
+     (jupyter . t))))
+#+end_src
+
 ** magit
 
 https://magit.vc
