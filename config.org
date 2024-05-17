@@ -31,6 +31,23 @@
 
 * Packages
 
+** citar
+
+https://github.com/emacs-citar/citar
+
+#+begin_quote
+Emacs package to quickly find and act on bibliographic references, and edit org, markdown, and latex academic documents.
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package citar
+  :straight t
+  :custom
+  (citar-bibliography my-bibliography)
+  (citar-library-paths `(,my-library-path))
+  (citar-notes-paths `(,my-notes-directory)))
+#+end_src
+
 ** corfu
 
 https://github.com/minad/corfu
@@ -67,6 +84,21 @@ cape.el - Completion At Point Extensions
 #+end_src
 
 Note that in order to use a non-English dictionary, it is useful a local variable like =cape-dict-file: "/usr/share/dict/spanish"=.
+
+** embark
+
+https://github.com/oantolin/embark
+
+#+begin_quote
+Emacs Mini-Buffer Actions Rooted in Keymaps
+#+end_quote
+
+#+begin_src
+(use-package embark
+  :straight t
+  :bind
+  (("C-=" . embark-act)))
+#+end_src
 
 ** jupyter
 
@@ -122,6 +154,21 @@ Magit is a complete text-based user interface to Git.
   :bind ("C-c m" . magit-status))
 #+end_src
 
+* marginalia
+
+https://github.com/minad/marginalia
+
+#+begin_quote
+marginalia.el - Marginalia in the minibuffer
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package marginalia
+  :straight t
+  :init
+  (marginalia-mode))
+#+end_src
+
 ** mixed-pitch
 
 https://gitlab.com/jabranham/mixed-pitch
@@ -153,6 +200,22 @@ https://gitlab.com/protesilaos/modus-themes
   (load-theme 'modus-operandi :no-confirm))
 #+end_src
 
+** orderless
+
+https://github.com/oantolin/orderless
+
+#+begin_quote
+Emacs completion style that matches multiple regexps in any order
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package orderless
+  :straight t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
 ** org
 
 - I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
@@ -169,7 +232,8 @@ https://gitlab.com/protesilaos/modus-themes
    `(org-document-title ((t (:height 1.75)))))
   :custom
   (org-hide-emphasis-markers t)
-  (org-src-preserve-indentation t))
+  (org-src-preserve-indentation t)
+  (org-support-shift-select t))
 #+end_src
 
 ** org-fragtog
@@ -210,7 +274,7 @@ https://github.com/org-noter/org-noter
   :bind (("<f5> n" . org-noter))
   :custom
   (org-noter-auto-save-last-location t)
-  (org-noter-notes-search-path '(my-notes-directory)))
+  (org-noter-notes-search-path `(,my-notes-directory)))
 #+end_src
 
 ** org-roam
@@ -253,5 +317,19 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
   (pdf-tools-install))
 #+end_src
 
+* vertico
+
+https://github.com/minad/vertico
+
+#+begin_quote
+vertico.el - VERTical Interactive COmpletion
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package vertico
+  :straight t
+  :init
+  (vertico-mode))
+#+end_src
 
 
