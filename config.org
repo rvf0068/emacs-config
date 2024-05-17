@@ -40,12 +40,12 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
 #+end_quote
 
 #+begin_src emacs-lisp
-(use-package citar
-  :straight t
-  :custom
-  (citar-bibliography my-bibliography)
-  (citar-library-paths `(,my-library-path))
-  (citar-notes-paths `(,my-notes-directory)))
+    (use-package citar
+      :straight t
+      :custom
+      (citar-bibliography my-bibliography)
+      (citar-library-paths `(,my-library-path))
+      (citar-notes-paths `(,my-notes-directory)))
 #+end_src
 
 ** corfu
