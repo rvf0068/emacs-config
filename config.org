@@ -31,6 +31,113 @@
 
 * Packages
 
+** auctex                                                              :math:
+
+https://www.gnu.org/software/auctex/
+
+#+begin_quote
+AUCTeX is an extensible package for writing and formatting TeX files in GNU Emacs and XEmacs. It supports many different TeX macro packages, including AMS-TeX, LaTeX, Texinfo, ConTeXt, and docTeX (dtx files).
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package tex
+  :straight auctex
+  :mode ("\\.tikz\\'" . latex-mode)
+  :init
+  (defun my-latex-config ()
+    (TeX-add-symbols '("deg"))
+    (TeX-add-symbols '("emph" 1))
+    (TeX-add-symbols '("ne"))
+    (TeX-add-symbols '("to"))
+    (LaTeX-add-environments '("definition" LaTeX-env-label)
+			    '("theorem" LaTeX-env-label)
+			    '("lemma" LaTeX-env-label)
+			    '("corollary" LaTeX-env-label)
+			    '("proposition" LaTeX-env-label)
+			    '("problem" LaTeX-env-label)
+			    '("remark" LaTeX-env-label)
+			    '("example" LaTeX-env-label))
+    (add-to-list 'LaTeX-label-alist '("definition" . "def:"))
+    (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))
+    (add-to-list 'LaTeX-label-alist '("lemma" . "lem:"))
+    (add-to-list 'LaTeX-label-alist '("corollary" . "cor:"))
+    (add-to-list 'LaTeX-label-alist '("proposition" . "prop:"))
+    (add-to-list 'LaTeX-label-alist '("problem" . "prob:"))
+    (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
+    (add-to-list 'LaTeX-label-alist '("example" . "exa:"))
+    (add-to-list 'reftex-label-alist '("definition" ?d "def:" "~\\ref{%s}" nil ("Definition" "definition")))
+    (add-to-list 'reftex-label-alist '("theorem" ?h "thm:" "~\\ref{%s}" nil ("Theorem" "theorem")))
+    (add-to-list 'reftex-label-alist '("lemma" ?l "lem:" "~\\ref{%s}" nil ("Lemma" "lemma")))
+    (add-to-list 'reftex-label-alist '("corollary" ?c "cor:" "~\\ref{%s}" nil ("Corollary" "corollary")))
+    (add-to-list 'reftex-label-alist '("proposition" ?p "prop:" "~\\ref{%s}" nil ("Proposition" "proposition")))
+    (add-to-list 'reftex-label-alist '("problem" ?b "prob:" "~\\ref{%s}" nil ("Problem" "problem")))
+    (add-to-list 'reftex-label-alist '("remark" ?r "rem:" "~\\ref{%s}" nil ("Remark" "remark")))
+    (add-to-list 'reftex-label-alist '("example" ?e "rem:" "~\\ref{%s}" nil ("Example" "example")))
+    (TeX-run-style-hooks "tikz")
+    (TeX-run-style-hooks "tkz-graph")
+    (TeX-run-style-hooks "tkz-berge"))
+  :custom
+  (TeX-auto-save t)
+  (TeX-electric-escape t)
+  (TeX-insert-braces nil)
+  (TeX-parse-self t)
+  (TeX-save-query nil)
+  (reftex-plug-into-AUCTeX t)
+  (reftex-use-external-file-finders t)
+  :hook
+  (LaTeX-mode . turn-on-cdlatex)
+  (LaTeX-mode . my-latex-config)
+  (LaTeX-mode . turn-on-reftex))
+#+end_src
+
+** cdlatex                                                             :math:
+
+https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
+
+#+BEGIN_QUOTE
+CDLaTeX is a minor mode for Emacs supporting fast insertion of environment templates and math stuff in LaTeX. Similar commands are also offered as part of the AUCTeX package, but it is not the same - CDLaTeX focuses on speediness for inserting LaTeX constructs. I myself am using CDLaTeX on top of AUCTeX.
+#+END_QUOTE
+
+The settings in =cdlatex-math-symbol-alist= are useful also when writing math in org-mode.
+
+It was needed to customize =cdlatex-takeover-parenthesis=, see [[https://github.com/cdominik/cdlatex/issues/15#issuecomment-864529972][this issue]].
+
+#+begin_src emacs-lisp
+(use-package cdlatex
+  :straight t
+  :custom
+  (cdlatex-math-symbol-alist
+   '(( ?c   ("\\colon"))
+     ( ?m   ("\\mu" "\\mapsto"))
+     ( ?p   ("\\pi" "\\varpi" "\\perp"))
+     ( ?o   ("\\omega" "\\oplus"))
+     ( ?O   ("\\Omega" "\\mathrm{Orb}"))
+     ( ?S   ("\\Sigma" "\\mathrm{Stab}"))
+     ( ?T   ("\\bigtriangleup"))
+     ( ?-   ("\\cap" "\\leftrightarrow" "\\longleftrightarrow"))
+     ( ?.   ("\\ldots" "\\cdots" "\\cdot"))
+     ( ?*   ("\\times" "\\otimes"))
+     ( ?<   ("\\leq" "\\langle" "\\trianglelefteq"))
+     ( ?>   ("\\geq" "\\rangle" "\\trianglerighteq"))
+     ( ?=   ("\\simeq"))
+     ( ?\[  ("\\subseteq"))))
+  (cdlatex-math-modify-alist
+   '(( ?a "\\overrightarrow" nil t nil nil)
+     ( ?k "\\mathfrak" nil t nil nil)
+     ( ?B "\\mathbb"         nil t nil nil)))
+  (cdlatex-command-alist
+   '(("bin"  "Insert \\binom{}{}"
+      "\\binom{?}{}"       cdlatex-position-cursor nil nil t)
+     ("norm" "Insert \\Vert \\Vert"
+      "\\Vert ?\\Vert"     cdlatex-position-cursor nil nil t)
+     ("gen"  "Insert \\langle \\rangle"
+      "\\langle ?\\rangle" cdlatex-position-cursor nil nil t)
+     ("set"  "Insert a set"
+      "\\{?\\mid \\}"      cdlatex-position-cursor nil nil t)))
+  (cdlatex-simplify-sub-super-scripts nil)
+  (cdlatex-takeover-parenthesis nil))
+#+end_src
+
 ** citar
 
 https://github.com/emacs-citar/citar
