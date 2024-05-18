@@ -336,10 +336,14 @@ Emacs completion style that matches multiple regexps in any order
 
 ** org
 
-- I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
+I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks are changed (indented) after edited.
 
 #+begin_src emacs-lisp
 (use-package org
+  :init
+  (defun my-org-mode-hook ()
+    (turn-on-auto-revert-mode)
+    (turn-on-org-cdlatex))
   :config
   (custom-theme-set-faces
    'user
@@ -349,9 +353,14 @@ Emacs completion style that matches multiple regexps in any order
    `(org-level-1 ((t (:height 1.5))))
    `(org-document-title ((t (:height 1.75)))))
   :custom
+  (org-file-apps
+   '((auto-mode . emacs)
+     ("pdf" . "evince %s")))
   (org-hide-emphasis-markers t)
   (org-src-preserve-indentation t)
-  (org-support-shift-select t))
+  (org-support-shift-select t)
+  :hook
+  (org-mode . my-org-mode-hook))
 #+end_src
 
 ** org-fragtog
