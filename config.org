@@ -179,6 +179,7 @@ corfu.el - COmpletion in Region FUnction
   :straight t
   :custom
   (corfu-auto t)
+  (corfu-auto-prefix 4)
   :init
   (global-corfu-mode))
 #+end_src
@@ -211,7 +212,7 @@ https://github.com/oantolin/embark
 Emacs Mini-Buffer Actions Rooted in Keymaps
 #+end_quote
 
-#+begin_src
+#+begin_src emacs-lisp
 (use-package embark
   :straight t
   :bind
@@ -272,7 +273,7 @@ Magit is a complete text-based user interface to Git.
   :bind ("C-c m" . magit-status))
 #+end_src
 
-* marginalia
+** marginalia
 
 https://github.com/minad/marginalia
 
