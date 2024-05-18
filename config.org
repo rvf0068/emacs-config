@@ -146,6 +146,8 @@ https://github.com/emacs-citar/citar
 Emacs package to quickly find and act on bibliographic references, and edit org, markdown, and latex academic documents.
 #+end_quote
 
+- Inserting a bibtex entry to a bibtex file: run =M-x citar-open=, then select the entry, then run =C-==, (embark-act) and choose.
+
 #+begin_src emacs-lisp
     (use-package citar
       :straight t
@@ -153,6 +155,15 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
       (citar-bibliography my-bibliography)
       (citar-library-paths `(,my-library-path))
       (citar-notes-paths `(,my-notes-directory)))
+#+end_src
+
+*** citar-embark
+
+#+begin_src emacs-lisp
+(use-package citar-embark
+  :straight t
+  :after (citar embark)
+  :config (citar-embark-mode))
 #+end_src
 
 ** corfu
