@@ -12,6 +12,10 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
+  :bind
+  ([(f2) (f2)] . indent-according-to-mode)
+  ([(super down)] . duplicate-line-forward)
+  ([(super up)] . duplicate-line-backward)
   :config
   (ido-mode 1)
   :custom
@@ -20,7 +24,32 @@
   (frame-title-format "%b: %+%+ %f")
   (mouse-drag-copy-region t)
   :init
-  (global-visual-line-mode))
+  (global-visual-line-mode)
+  (load custom-file)
+  ;; From: sandipchitale@yahoo.com (Sandip Chitale)
+  ;; Newsgroups: gnu.emacs.sources
+  ;; Subject: CODE: Duplicate line or region backward or forward
+  ;; Date: 7 Feb 2004 12:15:35 -0800
+  (defun duplicate-line-backward ()
+    "Duplicate the current line backward."
+    (interactive "*")
+    (save-excursion
+      (let ((contents (buffer-substring
+                       (line-beginning-position)
+                       (line-end-position))))
+	(beginning-of-line)
+	(insert contents ?\n)))
+    (previous-line 1))
+  (defun duplicate-line-forward ()
+    "Duplicate the current line forward."
+    (interactive "*")
+    (save-excursion
+      (let ((contents (buffer-substring
+                       (line-beginning-position)
+                       (line-end-position))))
+	(end-of-line)
+	(insert ?\n contents)))
+    (next-line 1)))
 #+end_src
 
 * use-package
@@ -151,10 +180,15 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
 #+begin_src emacs-lisp
 (use-package citar
   :straight t
+  :bind
+  ([(f7)] . citar-open)
   :custom
   (citar-bibliography my-bibliography)
   (citar-library-paths `(,my-library-path))
-  (citar-notes-paths `(,my-notes-directory)))
+  (citar-notes-paths `(,my-notes-directory))
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup))
 #+end_src
 
 *** citar-embark
@@ -163,6 +197,8 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
 (use-package citar-embark
   :straight t
   :after (citar embark)
+  :custom
+  (citar-at-point-function 'embark-act)
   :config (citar-embark-mode))
 #+end_src
 
@@ -435,6 +471,8 @@ https://github.com/org-noter/org-noter
 (use-package org-roam
   :straight t
   :after org
+  :bind
+  ("<f8> f" . org-roam-node-find)
   :custom
   (org-roam-directory my-notes-directory)
   :init
