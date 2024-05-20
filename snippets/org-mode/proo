@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: proof as special block
+# expand-env: ((yas-wrap-around-region t))
+# binding: <f6> p
+# key: proo
+# condition: (not (org-table-p))
+# --
+#+begin_proof
+$0
+#+end_proof
