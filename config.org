@@ -360,6 +360,9 @@ I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks
 #+begin_src emacs-lisp
 (use-package org
   :init
+  ;; see https://lists.gnu.org/archive/html/emacs-orgmode/2015-09/msg00118.html
+  (defmacro by-backend (&rest body)
+    `(cl-case org-export-current-backend ,@body))
   (defun my-org-mode-hook ()
     (turn-on-auto-revert-mode)
     (turn-on-org-cdlatex))
@@ -376,10 +379,13 @@ I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks
    '((auto-mode . emacs)
      ("pdf" . "evince %s")))
   (org-hide-emphasis-markers t)
+  (org-latex-compiler "xelatex")
+  (org-return-follows-link t)
   (org-src-preserve-indentation t)
   (org-support-shift-select t)
   :hook
-  (org-mode . my-org-mode-hook))
+  (org-mode . my-org-mode-hook)
+  (org-babel-after-execute . org-redisplay-inline-images))
 #+end_src
 
 ** org-fragtog
