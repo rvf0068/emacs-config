@@ -288,6 +288,24 @@ marginalia.el - Marginalia in the minibuffer
   (marginalia-mode))
 #+end_src
 
+** math-delimiters
+
+https://github.com/oantolin/math-delimiters
+
+#+begin_quote
+This package provides the command math-delimiters-insert to insert TeX/LaTeX math delimiters.
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package math-delimiters
+  :straight (:host github :repo "oantolin/math-delimiters")
+  :after (org cdlatex)
+  :bind (:map org-mode-map
+	 ("$" . math-delimiters-insert)
+	 :map cdlatex-mode-map
+	 ("$" . nil)))
+#+end_src
+
 ** mixed-pitch
 
 https://gitlab.com/jabranham/mixed-pitch
