@@ -14,18 +14,3 @@
 (straight-use-package 'org)
 
 (org-babel-load-file  (expand-file-name "config.org" user-emacs-directory))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   '((eval org-sbe filter)
-     (eval org-babel-lob-ingest "/home/rafael/Dropbox/org/reading-notes/options.org")
-     (org-confirm-babel-evaluate))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
