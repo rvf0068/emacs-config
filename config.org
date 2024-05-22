@@ -14,6 +14,7 @@
 (use-package emacs
   :bind
   ([(f2) (f2)] . indent-according-to-mode)
+  ([(f2) (r)] . recentf)
   ([(super down)] . duplicate-line-forward)
   ([(super up)] . duplicate-line-backward)
   :config
@@ -25,6 +26,7 @@
   (mouse-drag-copy-region t)
   :init
   (global-visual-line-mode)
+  (recentf-mode)
   (load custom-file)
   ;; From: sandipchitale@yahoo.com (Sandip Chitale)
   ;; Newsgroups: gnu.emacs.sources
