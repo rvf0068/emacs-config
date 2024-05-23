@@ -606,6 +606,36 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
   (pdf-tools-install))
 #+end_src
 
+** sage-shell-mode
+
+https://github.com/sagemath/sage-shell-mode
+
+#+begin_quote
+Emacs front end for SageMath
+#+end_quote
+
+I have to use commit =80fbb4e= here, since otherwise it does not work in my system.
+
+#+begin_src emacs-lisp
+(use-package sage-shell-mode
+  :straight t)
+#+end_src
+
+*** ob-sagemath
+
+https://github.com/sagemath/ob-sagemath
+
+#+begin_quote
+org-babel integration with SageMath
+#+end_quote
+
+#+begin_src emacs-lisp
+(use-package ob-sagemath
+  :straight t
+  :after sage-shell-mode)
+#+end_src
+
+
 ** smartparens
 
 https://github.com/Fuco1/smartparens
