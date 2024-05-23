@@ -254,6 +254,35 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
   :config (citar-embark-mode))
 #+end_src
 
+** consult
+
+https://github.com/minad/consult
+
+#+begin_quote
+consult.el - Consulting completing-read
+#+end_quote
+
+=consult-imenu= and =consult-line= are interesting to navigate files, especially org-mode files.
+
+I am using =bms/org-roam-rg-search= is a substitute of the package =deft.=
+
+#+begin_src emacs-lisp
+(use-package consult
+  :straight t
+  :bind
+  ("<f5> d" . bms/org-roam-rg-search)
+  ("<f5> l" . consult-line)
+  ("<f5> r" . consult-ripgrep)
+  :init
+  ;;; https://org-roam.discourse.group/t/using-consult-ripgrep-with-org-roam-for-searching-notes/1226
+  (defun bms/org-roam-rg-search ()
+    "Search org-roam directory using consult-ripgrep. With live-preview."
+    (interactive)
+    (let ((consult-ripgrep-command
+	   "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+      (consult-ripgrep org-roam-directory))))
+#+end_src
+
 ** corfu
 
 https://github.com/minad/corfu
@@ -304,7 +333,9 @@ Emacs Mini-Buffer Actions Rooted in Keymaps
 (use-package embark
   :straight t
   :bind
-  (("C-=" . embark-act)))
+  (("C-=" . embark-act))
+  :custom
+  (use-package embark-consult))
 #+end_src
 
 ** jupyter
