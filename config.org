@@ -234,6 +234,7 @@ Emacs package to quickly find and act on bibliographic references, and edit org,
   :straight t
   :bind
   ([(f7)] . citar-open)
+  ("<f5> b" . citar-insert-bibtex)
   :custom
   (citar-bibliography my-bibliography)
   (citar-library-paths `(,my-library-path))
@@ -494,14 +495,42 @@ I am setting =org-src-preserve-indentation= to =t= since otherwise source blocks
 
 #+begin_src emacs-lisp
 (use-package org
+  :bind
+  ("C-c a" . org-agenda)
+  ("C-c c" . org-capture)
   :init
   ;; see https://lists.gnu.org/archive/html/emacs-orgmode/2015-09/msg00118.html
   (defmacro by-backend (&rest body)
     `(cl-case org-export-current-backend ,@body))
+  ;; Set GTD. Create Inbox.org if it does not exist
+  (unless (file-exists-p
+	   (expand-file-name "Inbox.org" my-notes-directory))
+    (write-region "" nil (expand-file-name "inbox.org" my-notes-directory)))
+  (defun rvf/set-gtd ()
+    "Set agenda and templates for GTD"
+    (add-to-list 'org-agenda-files
+		 (expand-file-name "Inbox.org" my-notes-directory))
+    (add-to-list 'org-capture-templates
+	     `("@" "Inbox [mu4e]" entry
+	       (file ,(expand-file-name "Inbox.org" my-notes-directory))
+               ,(concat "* TODO Process \"%a\" %?\n"
+			"/Entered on/ %U")))
+    (add-to-list 'org-capture-templates
+	     `("i" "Inbox" entry
+	       (file ,(expand-file-name "Inbox.org" my-notes-directory))
+	       ,(concat "* TODO %?\n"
+			"/Entered on/ %U")))
+    ;; http://disq.us/p/2knurta
+    (add-to-list 'org-capture-templates
+		 `("w" "web" entry
+		   (file+headline ,(expand-file-name "Inbox.org" my-notes-directory) "Web")
+		   "* %?%i%a")))
   (defun my-org-mode-hook ()
+    (rvf/set-gtd)
     (turn-on-auto-revert-mode)
     (turn-on-org-cdlatex))
   :config
+  (require 'org-habit)
   (custom-theme-set-faces
    'user
    `(org-level-4 ((t (:height 1.1))))
