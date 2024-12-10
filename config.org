@@ -3,9 +3,13 @@
 #+begin_src emacs-lisp
 ;; -*- lexical-binding: t; -*-
 
-(setq my-notes-directory "~/Dropbox/org/reading-notes"
+(setq termux-p (string-suffix-p "android" system-configuration))
+
+(if termux-p
+    (setq my-notes-directory "~/documents/org/reading-notes")
+  (setq my-notes-directory "~/Dropbox/org/reading-notes"
       my-bibliography "~/Dropbox/texmf/bibtex/bib/misc/rvf.bib"
-      my-library-path "~/Documents/References/")
+      my-library-path "~/Documents/References/"))
 #+end_src
 
 * emacs general settings
