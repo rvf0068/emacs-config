@@ -27,7 +27,7 @@
   :init
   (global-visual-line-mode)
   (recentf-mode)
-  (load custom-file)
+  (load custom-file t)
   ;; From: sandipchitale@yahoo.com (Sandip Chitale)
   ;; Newsgroups: gnu.emacs.sources
   ;; Subject: CODE: Duplicate line or region backward or forward
